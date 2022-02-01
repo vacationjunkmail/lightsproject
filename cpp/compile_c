@@ -1,0 +1,3 @@
+#!/bin/bash
+dir="/home/pi/code/cpp/bin";
+g++ -o $dir/$1 $1.cpp && $dir/$1

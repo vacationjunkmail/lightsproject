@@ -1,0 +1,4 @@
+How to run these small programs.
+g++ -o whatever whatever.cpp && ./whatever
+
+
