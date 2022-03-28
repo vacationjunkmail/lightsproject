@@ -7,7 +7,7 @@
 void play_game()
 {
 	int random_int = rand() % 251;
-	std::cout << "Guess the number";
+	std::cout << "Guess the number:\n";
 	while(true)
 	{
 		int guess;
@@ -19,11 +19,11 @@ void play_game()
 		}
 		else if (guess < random_int)
 		{
-			std::cout << "Too low\n";
+			std::cout << "Too low:\n";
 		}
 		else 
 		{
-			std::cout << "To high\n";
+			std::cout << "To high:\n";
 		}
 	}
 }
