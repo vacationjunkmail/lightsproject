@@ -1,2 +1,5 @@
 *.swp
 bin/
+*.o
+*.txt
+*.log
