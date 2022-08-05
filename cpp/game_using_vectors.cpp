@@ -2,21 +2,32 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
+
+void print_vector(std::vector<int> vector)
+{
+	for(int i =0;i<vector.size();i++)
+	{
+		std::cout<< vector[i] << "\t";
+	}
+	std::cout << "\nYou took " << vector.size()<<" attempts to get the correct guess"<<std::endl;
+}
 
 
 void play_game()
 {
 	int random_int = rand() % 251;
 	std::cout << "Guess the number:\n";
-	int number_of_tries =1;
+	std::vector<int> guesses;
+
 	while(true)
 	{
 		int guess;
 		std::cin >> guess;
+		guesses.push_back(guess);
 		if(guess == random_int)
 		{
 			std::cout << "you guessed correct" << std::endl;
-			std::cout << "You took "<<number_of_tries<<" tries!"<<std::endl;
 			break;
 		}
 		else if (guess < random_int)
@@ -27,8 +38,8 @@ void play_game()
 		{
 			std::cout << "To high:\n";
 		}
-		number_of_tries++;
 	}
+	print_vector(guesses);
 }
 
 int main()

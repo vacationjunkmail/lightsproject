@@ -3,16 +3,30 @@
 #include <cstdlib>
 #include <ctime>
 
+void print_array(int array[],int count)
+{
+	std::cout<<"Your guesses: ";
+	for(int i =0;i<count;i++)
+	{
+		std::cout<< array[i] << "\t";
+	}
+	std::cout <<"\nFor a total of "<<count<<" guesses."<< std::endl;
+}
+
 
 void play_game()
 {
 	int random_int = rand() % 251;
 	std::cout << "Guess the number:\n";
 	int number_of_tries =1;
+	int guesses[250];
+	int guess_count=0;
+
 	while(true)
 	{
 		int guess;
 		std::cin >> guess;
+		guesses[guess_count++] = guess;
 		if(guess == random_int)
 		{
 			std::cout << "you guessed correct" << std::endl;
@@ -29,6 +43,7 @@ void play_game()
 		}
 		number_of_tries++;
 	}
+	print_array(guesses,number_of_tries);
 }
 
 int main()

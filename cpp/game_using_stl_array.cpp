@@ -2,21 +2,33 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <array>
+
+void print_stl_array(std::array<int,251> stl_array,int c)
+{
+	for(int i =0;i<c;i++)
+	{
+		std::cout<< stl_array[i] << "\t";
+	}
+	std::cout << "\nYou took " << c<<" attempts to get the correct guess"<<std::endl;
+}
 
 
 void play_game()
 {
 	int random_int = rand() % 251;
 	std::cout << "Guess the number:\n";
-	int number_of_tries =1;
+	std::array<int,251> guesses;
+	int count = 0;
+
 	while(true)
 	{
 		int guess;
 		std::cin >> guess;
+		guesses[count++] = guess;
 		if(guess == random_int)
 		{
 			std::cout << "you guessed correct" << std::endl;
-			std::cout << "You took "<<number_of_tries<<" tries!"<<std::endl;
 			break;
 		}
 		else if (guess < random_int)
@@ -27,8 +39,8 @@ void play_game()
 		{
 			std::cout << "To high:\n";
 		}
-		number_of_tries++;
 	}
+	print_stl_array(guesses,count);
 }
 
 int main()
