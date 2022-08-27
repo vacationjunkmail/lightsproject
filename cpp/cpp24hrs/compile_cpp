@@ -1,0 +1,8 @@
+#!/bin/bash
+dir="$(pwd)/bin";
+
+if [[ ! -e $dir ]]; then
+	mkdir $dir
+fi;
+
+g++ -o $dir/$1 $1.cpp && $dir/$1

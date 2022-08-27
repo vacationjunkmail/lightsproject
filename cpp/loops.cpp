@@ -17,7 +17,9 @@ int main()
 	int counter = while_fact - 1;
 	while(counter > 1)
 	{
+		std::cout << "while_fact: " << while_fact << " counter: " << counter <<"\n";
 		while_fact *= counter;
+		std::cout << "new while: "<<while_fact<<"\n";
 		counter--;
 	}
 	std::cout << "\nFactorial using while loop\n";
