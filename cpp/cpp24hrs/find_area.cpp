@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 
 int findArea(int length, int width = 20, int height = 12);
 
