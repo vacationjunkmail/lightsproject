@@ -6,10 +6,10 @@ class Tricycle
         Tricycle(int initialSpeed);
         ~Tricycle();
         void setSpeed(int setSpeed);
-        int getSpeed();
+        int getSpeed() const; //made this a constant. notice Tricycle::getSpeed() is now a constant
         void brake();
         void pedal();
-        int getWheelSize();
+        int getWheelSize() const;
         void setWheelSize(int wheelSize);
     private:
         int speed;
@@ -27,7 +27,7 @@ Tricycle::~Tricycle(){
 }
 
 //Get Speed
-int Tricycle::getSpeed(){
+int Tricycle::getSpeed() const {
     return speed;
 }
 
@@ -50,7 +50,7 @@ void Tricycle::brake(){
     std::cout<<"\nSlowing speed to:"<< getSpeed()<< "\n";
 }
 
-int Tricycle::getWheelSize(){
+int Tricycle::getWheelSize() const {
     return wheelSize;
 }
 

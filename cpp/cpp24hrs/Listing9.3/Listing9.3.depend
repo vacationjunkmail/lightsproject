@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1669161986 source:/home/pi/code/cpp/cpp24hrs/Listing9.3/main.cpp
+	"headers/Rectangle.h"
+
+1668648738 /home/pi/code/cpp/cpp24hrs/Listing9.3/headers/Rectangle.h
+	<iostream>
+
