@@ -9,4 +9,6 @@ lights.py:Turns on lights
 	./lights.py
 	conttrol + c shuts off light.  Also have a web app that will turn on/off light
 
-Should not be in main until merge
+git add <files>
+git commit -m "Write your comment>
+git push
