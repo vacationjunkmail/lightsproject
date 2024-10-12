@@ -1,0 +1,3 @@
+sudo tasksel
+sudo update-alternaties --config x-session-manager
+
