@@ -1,21 +1,24 @@
 #include <iostream>
 #include <cstdio>
+// Example of using global variables.
+// compare to Temperature.cpp
 
-float convert(float);
+void convert();
+
+float fahrenheit;
+float celsius;
 
 int main()
 {
-    float fahrenheit;
-    float celsius;
     
     printf("\nEnter fahrenheit temprature:");
     std::cin >> fahrenheit;
-    celsius = convert(fahrenheit);
+    convert();
     printf("Your %f fahrenheit temperature is %f in celsius",fahrenheit,celsius);
     return 0;
 }
 
-float convert(float f)
+void convert()
 {
-    return ((f-32) * 5)/9;
+    celsius = ((fahrenheit-32) * 5)/9;
 }
