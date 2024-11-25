@@ -3,3 +3,5 @@ bin/
 *.o
 *.txt
 *.log
+*.pyc
+__pycache__/
