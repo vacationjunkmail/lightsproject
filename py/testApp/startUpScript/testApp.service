@@ -1,0 +1,17 @@
+[Unit]
+# https://oxylabs.io/blog/python-script-service-guide
+Description=bash example Should Start appOne and appTwo
+After=syslog.target network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/code/py/testApp
+#Environment=PYTHONPATH=/home/pi/code/py/testApp
+#ExecStart=/home/pi/code/py/testApp/appOne/appOne.py
+ExecStart=/bin/bash -c '/home/pi/code/py/testApp/startUpScript/app.sh'
+# Not allowed with type=oneshot
+#Restart=always
+#RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
