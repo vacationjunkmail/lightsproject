@@ -42,6 +42,7 @@ class dbConnection():
     def disconnect(self):
         try:
             self.conn.close()
+            print("you have been disconnected")
         except Exception as e:
             print(f"DB Closing Error:{e}")
             return
