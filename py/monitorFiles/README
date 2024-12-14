@@ -1,0 +1,4 @@
+Monitors files in a directory using python watchdog.
+Moves files to source directory
+If files are in directory touch them to make them appear modified
+Badly written but messing around
