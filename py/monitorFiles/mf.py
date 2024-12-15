@@ -8,23 +8,21 @@ import subprocess
 
 def check_directory(directory):
     for f in directory.iterdir():
-        #print(f"{f.parts[-1]} is modified")
         f.touch()
     return True
 
 def on_modified(event):
-    print(f"Moving:{event.src_path}")
-    move_file(event.src_path)
+    move_file(event)
 
-def move_file(sourceFile):
-    args = ['rsync','-hav',sourceFile,destinationDir,'--remove-source-files']
-    #subprocess.call(['rsync',,'-hav',source,destinationDir])
-    subprocess.call(args)
+def move_file(event):
+    if not event.is_directory:
+        args = ['rsync','-hav',event.src_path,destinationDir,'--remove-source-files']
+        subprocess.call(args)
 
+def on_created(event):
+    print(f"Event:{event.src_path}")
+    move_file(event)
 if __name__ == "__main__":
-
-    def on_created(event):
-        print(f"Event:{event.src_path}")
     
     sourceDir = Path('/home/pi/Desktop/source')
     global destinationDir
