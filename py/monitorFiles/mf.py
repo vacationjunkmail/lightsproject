@@ -26,23 +26,29 @@ def on_created(event):
 
 class Monitor_Directory(FileSystemEventHandler):
 
-    def __init__(self,sourceDir = '/home/pi/Desktop/source',destinationDir = '/home/pi/Desktop/destination'):
-        self.sourceDir= sourceDir
-        self.destinationDir = destinationDir
-    
+    def __init__(self,source = '/home/pi/Desktop/source',destination = '/home/pi/Desktop/destination'):
+        self.source = Path(source)
+        self.destination = Path(destination)
+
+    @property 
     def sourceDir(self):
-        print(f"source:{self.sourceDir}")
+        print(f"*******************source:{self.source} type:{type(self.source)}")
+
+    @sourceDir.setter
+    def sourceDir(self,s):
+        self.source = Path(s)
 
     def destinationDir(self):
-        print(f"destination:{self.destinationDir}")
+        print(f"destination:{self.destination}")
         
 if __name__ == "__main__":
 
     m = Monitor_Directory()
-    #m.sourceDir = 'Here we go'
-    print(m.sourceDir)
-    print(m.destinationDir)
-    
+    # Resetting source
+    #m.sourceDir = '/new/directory'
+    # Calling property to see
+    #m.sourceDir
+    print(m.source) 
     sys.exit()    
     sourceDir = Path('/home/pi/Desktop/source')
     global destinationDir
