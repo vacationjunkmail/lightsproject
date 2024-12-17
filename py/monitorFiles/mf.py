@@ -26,9 +26,9 @@ def on_created(event):
     print(f"Event:{event.src_path}")
     move_file(event)
 
-class Monitor_Directory(FileSystemEventHandler):
+class Event_Handler(FileSystemEventHandler):
 
-    def __init__(self,source = '/home/pi/Desktop/source',destination = '/home/pi/Desktop/destination'):
+    def __init__(self,source,destination):
         self.source = Path(source)
         self.destination = Path(destination)
 
@@ -41,7 +41,7 @@ class Monitor_Directory(FileSystemEventHandler):
         self.source = Path(s)
 
     def destinationDir(self):
-        print(f"destination:{self.destination}")
+        return f"destination:{self.destination}"
         
 if __name__ == "__main__":
 
@@ -58,36 +58,49 @@ if __name__ == "__main__":
 
     with open(f"{configDirectory}/{configFile}") as f:
         configData = json.load(f)
-    print(configData['source'])
 
-
-    m = Monitor_Directory()
+    #m = Event_Handler(configData['source'],configData['destination'])
     # Resetting source
     #m.sourceDir = '/new/directory'
     # Calling property to see
     #m.sourceDir
-    print(m.source) 
-    sys.exit()    
-    sourceDir = Path('/home/pi/Desktop/source')
-    global destinationDir
-    destinationDir = Path('/home/pi/Desktop/destination')
-
-    event_handler = FileSystemEventHandler()
-
-    #Custom on_created
-    event_handler.on_created = on_created
-    event_handler.on_modified = on_modified
+    #print(m.source) 
+    #print(m.destination)
+    #print(m.destinationDir())
+    
     directoryObserver = Observer()
-    #print(dir(directoryObserver))
-    directoryObserver.schedule(event_handler,sourceDir,recursive = True)
+    event_handler = Event_Handler(configData['source'],configData['destination']) 
+    directoryObserver.schedule(event_handler,configData['source'],recursive = True)
     directoryObserver.start()
-
     try:
         while True:
-            time.sleep(3)
-            check_directory(sourceDir)
+            time.sleep(2)
     except Exception as e:
-        print(f"Exception:{e}")
+        print(f"Exception::-->{e}\nCaused the program to stop")
         directoryObserver.stop()
-
     directoryObserver.join()
+
+    #sys.exit()    
+    #sourceDir = Path('/home/pi/Desktop/source')
+    #global destinationDir
+    #destinationDir = Path('/home/pi/Desktop/destination')
+
+    #event_handler = FileSystemEventHandler()
+
+    #Custom on_created
+    #event_handler.on_created = on_created
+    #event_handler.on_modified = on_modified
+    #directoryObserver = Observer()
+    #print(dir(directoryObserver))
+    #directoryObserver.schedule(event_handler,sourceDir,recursive = True)
+    #directoryObserver.start()
+
+    #try:
+    #    while True:
+    #        time.sleep(3)
+    #        check_directory(sourceDir)
+    #except Exception as e:
+    #    print(f"Exception:{e}")
+    #    directoryObserver.stop()
+
+    #directoryObserver.join()
