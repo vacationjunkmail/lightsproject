@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+import argparse
 from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-import time
 import subprocess
 import sys
+import time
+import json
 
 def check_directory(directory):
     for f in directory.iterdir():
@@ -42,6 +44,22 @@ class Monitor_Directory(FileSystemEventHandler):
         print(f"destination:{self.destination}")
         
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f','--file', help='Config files stored in config dir')
+
+    configDirectory = '/home/pi/code/py/monitorFiles/config'
+    configFile = 'config.json'
+
+    args = parser.parse_args()
+
+    if args.file:
+        configFile = args.file
+
+    with open(f"{configDirectory}/{configFile}") as f:
+        configData = json.load(f)
+    print(configData['source'])
+
 
     m = Monitor_Directory()
     # Resetting source
