@@ -9,20 +9,21 @@ import sys
 import time
 import json
 
-def check_directory(directory):
-    for f in directory.iterdir():
+def check_directory(directory)->None:
+    for f in Path(directory).iterdir():
         f.touch()
-    return True
+        print(f)
+    return None
 
-def on_modified(event):
+def aon_modified(event):
     move_file(event)
 
-def move_file(event):
+def _move_file(event):
     if not event.is_directory:
         args = ['rsync','-hav',event.src_path,destinationDir,'--remove-source-files']
         subprocess.call(args)
 
-def on_created(event):
+def aon_created(event):
     print(f"Event:{event.src_path}")
     move_file(event)
 
@@ -34,7 +35,7 @@ class Event_Handler(FileSystemEventHandler):
 
     @property 
     def sourceDir(self):
-        print(f"*******************source:{self.source} type:{type(self.source)}")
+        print(f"source:{self.source} type:{type(self.source)}")
 
     @sourceDir.setter
     def sourceDir(self,s):
@@ -43,6 +44,23 @@ class Event_Handler(FileSystemEventHandler):
     def destinationDir(self):
         return f"destination:{self.destination}"
         
+    def on_created(self,event)->None:
+        print("on_created")
+        self.move_file(event)
+        return None
+
+    def on_modified(self,event)->None:
+        if not event.is_directory:
+            print(f"on_modified:{event.src_path}")
+            self.move_file(event)
+        return None
+
+    def move_file(self,event)->None:
+        if not event.is_directory:
+            args = ['rsync','-hav',event.src_path,self.destination,'--remove-source-files']
+            subprocess.call(args)
+        return None
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
@@ -75,6 +93,7 @@ if __name__ == "__main__":
     try:
         while True:
             time.sleep(2)
+            check_directory(configData['source'])
     except Exception as e:
         print(f"Exception::-->{e}\nCaused the program to stop")
         directoryObserver.stop()
