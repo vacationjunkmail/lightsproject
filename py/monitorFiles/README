@@ -1,4 +1,9 @@
 Monitors files in a directory using python watchdog.
 Moves files to source directory
 If files are in directory touch them to make them appear modified
+    on_created kept getting called and would create a traffic jam with 
+    on_modified so I am transferring files instead of touching the file.
+sources:
+    https://pravash-techie.medium.com/python-event-monitoring-with-watchdogs-86125f946da6
+    https://thepythoncorner.com/posts/2019-01-13-how-to-create-a-watchdog-in-python-to-look-for-filesystem-changes/ 
 Badly written but messing around

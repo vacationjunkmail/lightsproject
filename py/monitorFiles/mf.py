@@ -9,29 +9,21 @@ import sys
 import time
 import json
 
-def check_directory(directory)->None:
-    for f in Path(directory).iterdir():
-        f.touch()
-        print(f)
+def check_directory(configData)->None:
+    # make sure there is a destination
+    if configData['destination']:
+        for f in Path(configData['source']).iterdir():
+            #f.touch()
+            print(f"Moving:{f}")
+            Event_Handler.move_file(f,configData['destination'])
     return None
-
-def aon_modified(event):
-    move_file(event)
-
-def _move_file(event):
-    if not event.is_directory:
-        args = ['rsync','-hav',event.src_path,destinationDir,'--remove-source-files']
-        subprocess.call(args)
-
-def aon_created(event):
-    print(f"Event:{event.src_path}")
-    move_file(event)
 
 class Event_Handler(FileSystemEventHandler):
 
     def __init__(self,source,destination):
         self.source = Path(source)
         self.destination = Path(destination)
+        sourceDirectory = self.source
 
     @property 
     def sourceDir(self):
@@ -46,19 +38,21 @@ class Event_Handler(FileSystemEventHandler):
         
     def on_created(self,event)->None:
         print("on_created")
-        self.move_file(event)
+        Event_Handler.move_file(event.src_path,self.destination)
         return None
 
-    def on_modified(self,event)->None:
-        if not event.is_directory:
-            print(f"on_modified:{event.src_path}")
-            self.move_file(event)
-        return None
+    #def on_modified(self,event)->None:
+    #    if not event.is_directory:
+    #        print(f"-->on_modified:{event.src_path} size:{Path(event.src_path).stat().st_size}")
+    #        self.move_file(event)
+    #    return None
 
-    def move_file(self,event)->None:
-        if not event.is_directory:
-            args = ['rsync','-hav',event.src_path,self.destination,'--remove-source-files']
+    @staticmethod
+    def move_file(sourceFile,fileDestination)->None:
+        if Path(sourceFile).exists():
+            args = ['rsync','-hav',sourceFile,fileDestination,'--remove-source-files','--quiet']
             subprocess.call(args)
+            
         return None
 
 if __name__ == "__main__":
@@ -93,7 +87,7 @@ if __name__ == "__main__":
     try:
         while True:
             time.sleep(2)
-            check_directory(configData['source'])
+            check_directory(configData)
     except Exception as e:
         print(f"Exception::-->{e}\nCaused the program to stop")
         directoryObserver.stop()
