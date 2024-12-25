@@ -23,8 +23,9 @@ class Event_Handler(FileSystemEventHandler):
         return f"destination:{self.destination}"
         
     def on_created(self,event)->None:
-        print("on_created")
-        Event_Handler.move_file(event.src_path,self.destination)
+        Event_Handler.display_message("Function:","on_created called")
+        Event_Handler.display_message("Moving:",event.src_path)
+        Event_Handler.move_file(Path(event.src_path),self.destination)
         return None
 
     @staticmethod
@@ -32,6 +33,12 @@ class Event_Handler(FileSystemEventHandler):
         if Path(sourceFile).exists():
             args = ['rsync','-hav',sourceFile,fileDestination,'--remove-source-files','--quiet']
             subprocess.call(args)
-            print(f"File:{type(sourceFile)} moved")
+            Event_Handler.display_message(f"File:{sourceFile.name}","moved")
             
         return None
+
+    @staticmethod
+    def display_message(msgOne,msgTwo = '')->None:
+        print(f"{msgOne} {msgTwo}")
+        return None
+

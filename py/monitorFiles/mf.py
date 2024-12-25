@@ -3,7 +3,6 @@
 import argparse
 from pathlib import Path
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
 from classes.event_handler import Event_Handler as EH
 import subprocess
 import sys
@@ -15,7 +14,7 @@ def check_directory(configData)->None:
     if configData['destination']:
         for f in Path(configData['source']).iterdir():
             #f.touch()
-            print(f"Moving:{f}")
+            EH.display_message("Moving:",f)
             EH.move_file(f,configData['destination'])
     return None
 
@@ -37,7 +36,6 @@ if __name__ == "__main__":
         configData = json.load(f)
 
     directoryObserver = Observer()
-    #event_handler = Event_Handler(configData['source'],configData['destination']) 
     event_handler = EH(configData['source'],configData['destination']) 
     directoryObserver.schedule(event_handler,configData['source'],recursive = True)
     directoryObserver.start()
