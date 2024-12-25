@@ -6,4 +6,9 @@ If files are in directory touch them to make them appear modified
 sources:
     https://pravash-techie.medium.com/python-event-monitoring-with-watchdogs-86125f946da6
     https://thepythoncorner.com/posts/2019-01-13-how-to-create-a-watchdog-in-python-to-look-for-filesystem-changes/ 
+
+
+files:
+    monitorFile.py:older version that works.  
+    mf.py: works, uses a class
 Badly written but messing around
